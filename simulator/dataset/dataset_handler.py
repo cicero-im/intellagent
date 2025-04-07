@@ -7,6 +7,7 @@ import pickle
 from typing import List, Tuple
 from statistics import mean, stdev
 from simulator.healthcare_analytics import GenerateDatasetEvent, track_event
+import fickling
 
 
 class Dataset:
@@ -78,7 +79,7 @@ class Dataset:
         """
         logger = get_logger()
         if os.path.isfile(path):
-            self.records, iteration_num, dataset_cost = pickle.load(open(path, 'rb'))
+            self.records, iteration_num, dataset_cost = fickling.load(open(path, 'rb'))
         else:
             logger.warning(f"{ConsoleColor.RED}Dataset dump not found, initializing from zero{ConsoleColor.RESET}")
             iteration_num = 0

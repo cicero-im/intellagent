@@ -19,6 +19,7 @@ from simulator.healthcare_analytics import (
     ExceptionEvent,
     track_event
 )
+import fickling
 
 logger = None
 
@@ -48,7 +49,7 @@ class SimulatorExecutor:
             pickle.dump(descriptions_generator,
                         open(os.path.join(output_path, 'policies_graph', 'descriptions_generator.pickle'), 'wb'))
         else:
-            descriptions_generator = pickle.load(
+            descriptions_generator = fickling.load(
                 open(os.path.join(output_path, 'policies_graph', 'descriptions_generator.pickle'), 'rb'))
 
         descriptions_generator = descriptions_generator
@@ -122,7 +123,7 @@ class SimulatorExecutor:
         logger.info(f"{ConsoleColor.CYAN}Start running the simulator{ConsoleColor.RESET}")
         intermediate_res = os.path.join(experiment_dir, 'res_dump.pickle')
         if os.path.isfile(intermediate_res):
-            all_res, start_iteration, total_cost = pickle.load(open(intermediate_res, 'rb'))
+            all_res, start_iteration, total_cost = fickling.load(open(intermediate_res, 'rb'))
         # Handle batches
         for i in range(start_iteration, num_batch, 1):
             if total_cost > self.config['dialog_manager']['cost_limit']:
