@@ -1,7 +1,7 @@
 import ast
-import random
 import string
 import json
+import secrets
 
 
 def convert_json_strings(input_dict):
@@ -44,7 +44,7 @@ def fix_duplicate_indices_with_random_strings(df, length=6):
 
     def generate_random_string(length=6):
         """Generate a random string of given length."""
-        return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
+        return ''.join(secrets.SystemRandom().choices(string.ascii_letters + string.digits, k=length))
 
     # Track seen indices
     seen_indices = set()

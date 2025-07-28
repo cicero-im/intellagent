@@ -5,7 +5,7 @@ from simulator.utils.parallelism import batch_invoke, async_batch_invoke
 from typing import Tuple
 from simulator.utils.llm_utils import get_llm
 import networkx as nx
-import random, math
+import math
 from simulator.env import Env
 from dataclasses import dataclass
 from simulator.utils.logger_config import ConsoleColor, get_logger
@@ -16,6 +16,7 @@ from simulator.healthcare_analytics import (
     GenerateRelationsGraphEvent,
     track_event
 )
+import secrets
 
 
 def policies_list_to_str(policies):
@@ -227,7 +228,7 @@ class DescriptionGenerator:
         :return: list of nodes in the path and the path sum
         """
         # Start with a random node
-        current_node = random.choice(list(self.graph_info['G'].nodes))
+        current_node = secrets.choice(list(self.graph_info['G'].nodes))
         path = [current_node]
         path_sum = self.graph_info['nodes'][current_node]['score']
 
@@ -239,7 +240,7 @@ class DescriptionGenerator:
             weights = [self.graph_info['G'][current_node][neighbor]['weight'] for neighbor in neighbors]
 
             # Weighted choice of the next node
-            next_node = random.choices(neighbors, weights=weights)[0]
+            next_node = secrets.SystemRandom().choices(neighbors, weights=weights)[0]
 
             # Add the chosen node to the path and update path sum
             path.append(next_node)
